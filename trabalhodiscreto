@@ -1,0 +1,59 @@
+def lerConjuntos(linha1, linha2):
+    def linha_para_conjunto(linha):
+        conjunto = set()
+        elemento = ''
+        for char in linha:
+            if char not in {',', ' ', '\n'}:
+                elemento += char
+            elif char == ',':
+                if elemento:
+                    conjunto.add(elemento)
+                    elemento = ''
+        if elemento:
+            conjunto.add(elemento)
+        return conjunto
+
+    conjunto1 = linha_para_conjunto(linha1)
+    conjunto2 = linha_para_conjunto(linha2)
+
+    return conjunto1, conjunto2
+
+
+def diferenca(conjunto1, conjunto2):
+    return {elemento for elemento in conjunto1 if elemento not in conjunto2}
+
+
+def realizar_operacoes(operacoes):
+    print("Iniciando a função realizar_operacoes...")
+    for operacao, linha1, linha2 in operacoes:
+        print(f"Processando operação: {operacao}")
+        conjunto1, conjunto2 = lerConjuntos(linha1, linha2)
+        print(f"Conjunto 1: {conjunto1}, Conjunto 2: {conjunto2}")
+
+        if operacao == 'U':
+            resultado = conjunto1 | conjunto2  # União
+            print(f"União: {resultado}")
+        elif operacao == 'I':
+            resultado = conjunto1 & conjunto2  # Interseção
+            print(f"Interseção: {resultado}")
+        elif operacao == 'D':
+            resultado = diferenca(conjunto1, conjunto2)  # Diferença
+            print(f"Diferença: {resultado}")
+        elif operacao == 'C':
+            resultado = {(a, b) for a in conjunto1 for b in conjunto2}  # Produto Cartesiano
+            print(f"Produto Cartesiano: {resultado}")
+        else:
+            print(f"Operação inválida: {operacao}")
+
+
+# Teste do programa com dados definidos diretamente no código
+if __name__ == "_main_":
+    print("Executando o bloco principal...")
+    operacoes = [
+        ('U', '1, 2, 3', '3, 4, 5'),  # União entre {1, 2, 3} e {3, 4, 5}
+        ('I', 'a, b, c', 'b, c, d'),  # Interseção entre {a, b, c} e {b, c, d}
+        ('D', 'x, y, z', 'y, z, w'),  # Diferença entre {x, y, z} e {y, z, w}
+        ('C', '1, 2', 'a, b')  # Produto cartesiano entre {1, 2} e {a, b}
+    ]
+
+    realizar_operacoes(operacoes)
