@@ -1,3 +1,4 @@
+#Gabriel Ribeiro Estefanski
 def lerConjuntos(linha1, linha2):
     def linha_para_conjunto(linha):
         conjunto = set()
